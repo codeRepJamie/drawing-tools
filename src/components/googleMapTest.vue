@@ -17,7 +17,8 @@
                  :center="center"
                  :zoom="18"
                  map-type-id="terrain"
-                 style="width: 1000px; height: 500px">
+                 style="width: 1000px; height: 500px"
+                 @mouseout="mouseoutMap">
             <GmapMarker
                     :position="center"
                     :clickable="true"
@@ -31,6 +32,7 @@
   import DisplayRoute from './getPathMethod'
   // import SearchPlaceService from './searchPlaceService'
   import TrackLine from './trackLine'
+  // import _ from 'lodash'
 
   export default {
     name: 'googleMapTest',
@@ -99,7 +101,7 @@
       },
       moveLatLng (e) {
         let len = this.pathLength
-        if(len < 1){
+        if (len < 1) {
           len = 1
         }
         this.trackLine.setLatLng(len, e.latLng)
@@ -129,11 +131,18 @@
         this.trackLine.reset()
       },
       startDraw () {
+        this.trackLine.setEditable(false)
         this.trackLine.clickable(this.draw)
         this.draw = !this.draw
       },
       getLatLngArray () {
         console.log(this.trackLine.getLatLngArray())
+      },
+      mouseoutMap () {
+        if(this.draw){
+          this.rightEvent()
+        }
+
       }
     }
   }
