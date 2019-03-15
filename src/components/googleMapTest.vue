@@ -99,7 +99,6 @@
         this.circleObj['circle'+ this.circleNum] = new TrackLine(this.map)
         this.trackLine = this.circleObj['circle'+ this.circleNum]
         this.trackLine.setTrack()
-        console.log(this.circleObj)
       },
       rightEvent () {
         this.draw = false
