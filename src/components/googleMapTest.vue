@@ -18,8 +18,7 @@
                  :center="center"
                  :zoom="18"
                  map-type-id="terrain"
-                 style="width: 1000px; height: 500px"
-                 @mouseout="mouseoutMap">
+                 style="width: 1000px; height: 500px">
             <GmapMarker
                     :position="center"
                     :clickable="true"
@@ -80,6 +79,7 @@
 
         gmapApi().maps.event.addListener(this.map, 'click', this.addLatLng.bind(this))
         gmapApi().maps.event.addListener(this.map, 'rightclick', this.rightEvent.bind(this))
+        gmapApi().maps.event.addListener(this.map, 'mouseout', this.mouseoutMap.bind(this))
       })
     },
     methods: {
