@@ -1,5 +1,6 @@
 <template>
     <div class="content">
+        <button class="btn" @click="addCircle">新增围栏</button>
         <button class="btn" @click="startDraw">{{draw ? '可画' : '不可画'}}</button>
         <button class="btn" @click="editFun">{{isEditable ? '可编辑' : '不可编辑'}}</button>
         <button class="btn" @click="cancelFun">撤消</button>
@@ -41,7 +42,9 @@
         center: { lat: 23.126333, lng: 113.380046 },
         isEditable: false,
         pathLength: 0,
-        draw: false
+        draw: false,
+        circleObj: {},
+        circleNum: 0
       }
     },
     mounted () {
@@ -70,16 +73,14 @@
           {lat: 23.127370, lng: 113.375743}
         ])*/
 
-        this.trackLine = new TrackLine(map)
+        this.circleObj['circle'+ this.circleNum] = new TrackLine(map)
 
+        this.trackLine = this.circleObj['circle'+ this.circleNum]
         this.trackLine.setTrack()
 
         gmapApi().maps.event.addListener(this.map, 'click', this.addLatLng.bind(this))
         gmapApi().maps.event.addListener(this.map, 'rightclick', this.rightEvent.bind(this))
       })
-    },
-    created () {
-
     },
     methods: {
       handleClick (e) {
@@ -92,6 +93,13 @@
         }).catch((err) => {
           console.log(err)
         })
+      },
+      addCircle () {
+        this.circleNum += 1
+        this.circleObj['circle'+ this.circleNum] = new TrackLine(this.map)
+        this.trackLine = this.circleObj['circle'+ this.circleNum]
+        this.trackLine.setTrack()
+        console.log(this.circleObj)
       },
       rightEvent () {
         this.draw = false
